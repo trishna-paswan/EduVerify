@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
 import LoginRegister from "./pages/LoginRegister";
 import StudentDashboard from "./pages/StudentDashboard";
+import Home from "./pages/Home"; // ✅ Import your new Home page
 import { auth } from "./services/auth";
 
 // Header
@@ -14,19 +15,26 @@ function Header() {
   };
 
   return (
-    <header className="header">
-      <nav>
-        <Link to="/">Home</Link>{" | "}
-        {user && user.role === "student" && <Link to="/student">Student</Link>}
+    <header className="flex justify-between items-center p-4 bg-gray-900 text-white">
+      <nav className="space-x-4">
+        <Link to="/" className="hover:text-blue-400">Home</Link>
+        {user && user.role === "student" && (
+          <Link to="/student" className="hover:text-blue-400">Student</Link>
+        )}
       </nav>
       <div>
         {user ? (
           <span>
             {user.name} ({user.role}){" "}
-            <button onClick={handleLogout}>Logout</button>
+            <button
+              onClick={handleLogout}
+              className="ml-2 px-3 py-1 bg-red-500 rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
           </span>
         ) : (
-          <Link to="/login">Login</Link>
+          <Link to="/login" className="hover:text-blue-400">Login</Link>
         )}
       </div>
     </header>
@@ -43,11 +51,12 @@ function ProtectedRoute({ children, role }) {
 
 export default function App() {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main>
+      <main className="flex-1">
         <Routes>
-          <Route path="/" element={<h2>Welcome to Authenticity Validator</h2>} />
+          {/* ✅ Use Home.jsx instead of inline h2 */}
+          <Route path="/" element={<Home />} />  
           <Route path="/login" element={<LoginRegister />} />
           <Route
             path="/student"
