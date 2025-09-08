@@ -38,6 +38,48 @@ body {
   color: transparent;
 }
 
+/* Gradient Blur Circles */
+.blur-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(200px);
+  opacity: 0.6;
+  z-index: 0;
+}
+
+/* Different colored gradient circles */
+.blur-purple {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #7f5af0, transparent);
+  top: -150px;
+  left: -150px;
+}
+
+.blur-pink {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #ff61dc, transparent);
+  bottom: -100px;
+  right: -100px;
+}
+
+.blur-blue {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #00d4ff, transparent);
+  top: 200px;
+  right: -150px;
+}
+
+/* Ensure Hero content stays on top */
+.hero h1,
+.hero p,
+.hero button {
+  position: relative;
+  z-index: 10;
+}
+
 /* Hero */
 .hero {
   display: flex;

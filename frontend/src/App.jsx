@@ -71,7 +71,14 @@ export default function App() {
 
   const Hero = () => (
     <section className="hero">
+      {/* Gradient Blur Backgrounds */}
+      <div className="blur-circle blur-purple"></div>
+      <div className="blur-circle blur-pink"></div>
+      <div className="blur-circle blur-blue"></div>
+  
+      {/* Spotlight SVG */}
       <Spotlight className="spotlight-animation" fill="white" />
+  
       <h1>Master The Art Of Verification</h1>
       <p>
         The future of tamper-proof credential verification using Blockchain, AI, and DigiLocker.
@@ -79,6 +86,7 @@ export default function App() {
       <button>🚀 Explore Features</button>
     </section>
   );
+  
 
   const Features = () => (
     <section className="features" id="features">
