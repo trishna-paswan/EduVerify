@@ -8,6 +8,13 @@ body {
 }
 
 /* Navbar */
+nav a {
+  transition: all 0.2s ease-in-out;
+}
+nav a:hover {
+  color: yellow;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;

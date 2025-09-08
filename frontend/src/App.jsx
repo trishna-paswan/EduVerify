@@ -1,50 +1,7 @@
 import React from "react";
 import "./index.css";
-
-// Spotlight Component
-const Spotlight = ({ className = "", fill = "white" }) => (
-  <svg
-    className={`spotlight ${className}`}
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 3787 2842"
-    fill="none"
-  >
-    <g filter="url(#filter)">
-      <ellipse
-        cx="1924.71"
-        cy="273.501"
-        rx="1924.71"
-        ry="273.501"
-        transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-        fill={fill}
-        fillOpacity="0.21"
-      ></ellipse>
-    </g>
-    <defs>
-      <filter
-        id="filter"
-        x="0.860352"
-        y="0.838989"
-        width="3785.16"
-        height="2840.26"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="BackgroundImageFix"
-          result="shape"
-        ></feBlend>
-        <feGaussianBlur
-          stdDeviation="151"
-          result="effect1_foregroundBlur"
-        ></feGaussianBlur>
-      </filter>
-    </defs>
-  </svg>
-);
+import Navbar from "./Navbar"; 
+import Spotlight from "./Spotlight";
 
 export default function App() {
   const features = [
@@ -58,17 +15,7 @@ export default function App() {
     { title: "Analytics Dashboard", description: "Track verification attempts & detect fraud trends." },
   ];
 
-  const Navbar = () => (
-    <nav className="navbar">
-      <span className="logo">EduVerify</span>
-      <div>
-        <a href="/">Home</a>
-        <a href="#features">Features</a>
-        <a href="/login">Login</a>
-      </div>
-    </nav>
-  );
-
+  // ✅ Hero section
   const Hero = () => (
     <section className="hero">
       <Spotlight className="spotlight-animation" fill="white" />
@@ -76,10 +23,11 @@ export default function App() {
       <p>
         The future of tamper-proof credential verification using Blockchain, AI, and DigiLocker.
       </p>
-      <button>🚀 Explore Now </button>
+      <button>🚀 Explore Now</button>
     </section>
   );
 
+  // ✅ Features section
   const Features = () => (
     <section className="features" id="features">
       <h2>Features</h2>
@@ -94,6 +42,7 @@ export default function App() {
     </section>
   );
 
+  // ✅ Only one return
   return (
     <>
       <Navbar />
