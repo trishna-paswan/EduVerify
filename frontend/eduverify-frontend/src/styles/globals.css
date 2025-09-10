@@ -2,12 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------- Custom styles & animations ---------- */
+
 /* Spotlight animation */
-@keyframes spotlight {
-  0% { transform: scale(1) translate(-50%, -50%); opacity: 0.7; }
-  50% { transform: scale(1.1) translate(-50%, -50%); opacity: 1; }
-  100% { transform: scale(1) translate(-50%, -50%); opacity: 0.7; }
+@keyframes spotlight-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.65; }
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.65; }
 }
 .animate-spotlight {
-  animation: spotlight 8s ease-in-out infinite;
+  animation: spotlight-pulse 8s ease-in-out infinite;
+}
+
+/* Ring spin (infinite rotation) */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Moving stroke around button (infinite) */
+@keyframes dash-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Explore button wrapper to show rotating ring + animated border */
+.explore-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 9999px;
+  padding: 2px; /* spacing for ring */
+}
+.explore-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  /* soft glow ring */
+  background: conic-gradient(from 90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.16), rgba(255,255,255,0.06));
+  filter: blur(8px);
+  animation: spin-slow 8s linear infinite;
+}
+
+/* dashed moving line around button (top overlay) */
+.explore-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  z-index: 2;
+  pointer-events: none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.explore-border > .dash {
+  width: calc(100% + 24px);
+  height: calc(100% + 24px);
+  border-radius: 9999px;
+  border: 2px dashed rgba(255,255,255,0.35);
+  transform-origin: center;
+  animation: spin-slow 10s linear infinite;
+}
+
+/* subtle spotlight overlay for the hero */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.0) 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Feature card hover */
+.feature-card {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  transform-origin: center;
+}
+.feature-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 50px rgba(2,6,23,0.45);
+}
+
+/* Footer minimal */
+.site-footer {
+  background: linear-gradient(180deg, #000 0%, #040404 100%);
 }

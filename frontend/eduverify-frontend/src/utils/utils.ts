@@ -1,3 +1,5 @@
-export function cn(...classes: (string | undefined | null | false)[]) {
-  return classes.filter(Boolean).join(" ");
-}
+// src/utils/cn.ts
+export default function cn(...args: any[]) {
+    return args.filter(Boolean).join(" ");
+  }
+  

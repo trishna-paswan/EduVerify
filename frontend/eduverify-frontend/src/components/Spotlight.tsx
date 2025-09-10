@@ -1,27 +1,27 @@
-import { cn } from "../utils/utils"; // utility for combining classes
-
-type SpotlightProps = {
-  className?: string;
-  fill?: string;
-};
-
-export const Spotlight = ({ className, fill }: SpotlightProps) => {
-  return (
-    <svg
-      className={cn(
-        "animate-spotlight pointer-events-none absolute z-0 h-[1000px] w-[1000px]",
-        className
-      )}
-      viewBox="0 0 600 600"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <radialGradient id="grad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor={fill || "rgba(255,255,255,0.08)"} />
-          <stop offset="100%" stopColor="transparent" />
-        </radialGradient>
-      </defs>
-      <circle cx="300" cy="300" r="300" fill="url(#grad)" />
-    </svg>
-  );
-};
+// src/components/Spotlight.tsx
+export default function Spotlight({ className = "" }: { className?: string }) {
+    return (
+      <div
+        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none ${className}`}
+        aria-hidden
+      >
+        <svg
+          width="950"
+          height="950"
+          viewBox="0 0 600 600"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-spotlight"
+        >
+          <defs>
+            <radialGradient id="g" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(255,255,255,0.12)" />
+              <stop offset="40%" stopColor="rgba(255,255,255,0.06)" />
+              <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+            </radialGradient>
+          </defs>
+          <rect width="600" height="600" fill="url(#g)" rx="300" />
+        </svg>
+      </div>
+    );
+  }
+  
