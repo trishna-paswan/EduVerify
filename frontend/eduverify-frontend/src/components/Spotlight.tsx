@@ -1,4 +1,4 @@
-import { cn } from "@/utils/utils"; // utility for combining classes
+import { cn } from "../utils/utils"; // utility for combining classes
 
 type SpotlightProps = {
   className?: string;

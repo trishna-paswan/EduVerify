@@ -1,4 +1,4 @@
-import { Spotlight } from "@/components/Spotlight";
+import { Spotlight } from "../components/Spotlight";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
