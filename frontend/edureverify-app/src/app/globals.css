@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* You can still add your own custom CSS below the import statement */
+body {
+  font-family: sans-serif;
+}
