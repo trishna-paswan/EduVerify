@@ -1,0 +1,105 @@
+import cv2
+import qrcode
+import uuid
+from PIL import Image, ImageDraw, ImageFont
+
+# -------------------------------
+# Blockchain ledger (demo)
+# -------------------------------
+blockchain_ledger = {}
+
+# -------------------------------
+# Function: Generate QR Code
+# -------------------------------
+def generate_qr(certificate_hash, filename):
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(certificate_hash)
+    qr.make(fit=True)
+    img = qr.make_image(fill='black', back_color='white').convert("RGB")
+    img.save(filename)
+
+# -------------------------------
+# Function: Create Certificate
+# -------------------------------
+def create_certificate_with_qr(template_path, student, output_path, qr_position=(1000, 600)):
+    qr_file = "temp_qr.png"
+    generate_qr(student["hash"], qr_file)
+
+    cert = Image.open(template_path).convert("RGB")
+
+    qr = Image.open(qr_file).resize((150, 150))
+    cert.paste(qr, qr_position)
+
+    draw = ImageDraw.Draw(cert)
+    font = ImageFont.load_default()
+    draw.text((200, 300), f"Name: {student['name']}", font=font, fill="black")
+    draw.text((200, 350), f"University: {student['university']}", font=font, fill="black")
+    draw.text((200, 400), f"Roll No: {student['roll_no']}", font=font, fill="black")
+
+    cert.save(output_path)
+    print(f"✅ Certificate created: {output_path}")
+
+    blockchain_ledger[student["hash"]] = student
+
+# -------------------------------
+# Function: Verify Certificate (QR Only)
+# -------------------------------
+def verify_certificate_with_camera(camera_source):
+    cap = cv2.VideoCapture(camera_source)
+    detector = cv2.QRCodeDetector()
+
+    print("🎥 Scanning certificate. Press 'q' to quit.")
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("⚠️ Failed to capture frame")
+            break
+
+        qr_data, _, _ = detector.detectAndDecode(frame)
+        if qr_data:
+            print("🔎 QR Code Detected:", qr_data)
+
+            if qr_data in blockchain_ledger:
+                record = blockchain_ledger[qr_data]
+                print("✅ Certificate Valid:", record)
+            else:
+                print("❌ Invalid Certificate: Details not found")
+
+            break  # stop after scanning
+
+        cv2.imshow("QR Scanner", frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+# -------------------------------
+# Demo Usage
+# -------------------------------
+if __name__ == "__main__":
+    # Step 1: Take user input
+    name = input("Enter Student Name: ")
+    university = input("Enter University: ")
+    roll_no = input("Enter Roll No: ")
+
+    # Step 2: Auto-generate hash
+    unique_hash = str(uuid.uuid4())[:8]  # short unique hash
+
+    student = {
+        "hash": unique_hash,
+        "name": name,
+        "university": university,
+        "roll_no": roll_no
+    }
+
+    # Step 3: Create certificate
+    create_certificate_with_qr(r"C:\Users\OMEN\OneDrive\hackathon\template.png", student, f"{name}_certificate.jpg")
+
+    # Step 4: Ask for IP Webcam URL
+    ip_url = input("Enter IP Webcam URL (e.g., http://192.168.x.x:8080/video): ")
+
+    # Step 5: Verify certificate using mobile camera
+    verify_certificate_with_camera(ip_url)
+
